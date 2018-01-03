@@ -1,16 +1,16 @@
 {
   "name": "simple-message",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "description": "messaaging application",
   "main": "main.js",
+  "repository": "https://github.com/Sm1rfa/SimpleMessage",
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
-    "build":"build --win",
-    "ship":"build --win -p always"
+    "build": "build --win",
+    "ship": "build --win -p always"
   },
-  "repository": "https://github.com/Sm1rfa/SimpleMessage",
   "keywords": [
     "Electron",
     "simple",
@@ -20,30 +20,7 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "~1.7.8",
-    "electron-builder": "^19.45.5"
-  },
-  "build": {
-    "appId": "simple.messages",
-    "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        }
-      ]
-    },
-    "linux": {
-      "target": [
-        {
-          "target": "rpm",
-          "arch": "x64"
-        }
-      ]
-    },
-    "icon": "images/msgIco.ico"
+    "electron-builder": "^19.50.0"
   },
   "postinstall": "electron-builder install-app-deps",
   "dependencies": {
