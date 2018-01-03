@@ -11,6 +11,9 @@ const { shell, ipcMain } = electron;
 const path = require('path')
 const url = require('url')
 
+const isDev = require('electron-is-dev');  // this is required to check if the app is running in development mode. 
+const {appUpdater} = require('./autoupdate');
+
 const mainURL = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -148,3 +151,19 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+if (require('electron-squirrel-startup')) {
+	app.quit();
+}
+
+function isWindowsOrmacOS() {
+	return process.platform === 'darwin' || process.platform === 'win32';
+}
+
+const page = mainWindow.webContents;
+  
+  page.once('did-frame-finish-load', () => {
+    const checkOS = isWindowsOrmacOS();
+    if (checkOS && !isDev) {
+      // Initate auto-updates on macOs and windows
+      appUpdater();
+    }});
