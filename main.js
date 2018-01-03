@@ -155,7 +155,7 @@ app.on('activate', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 autoUpdater.on('update-downloaded', (info) => {
-  win.webContents.send('updateReady')
+  mainWindow.webContents.send('updateReady')
 });
 
 // when receiving a quitAndInstall signal, quit and install the new version ;)
