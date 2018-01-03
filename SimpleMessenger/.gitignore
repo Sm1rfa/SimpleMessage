@@ -1,9 +1,14 @@
-#directories
+# directories
 node_modules
 dist
+build
 .vscode
 
-#files
+# files
 *.tgz
 *.log
 *.yml
+
+# yarn
+package-lock.json
+yarn.lock

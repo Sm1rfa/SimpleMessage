@@ -1,6 +1,6 @@
 {
   "name": "simple-message",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "messaaging application",
   "main": "main.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "build":"build --win",
     "ship":"build --win -p always"
   },
-  "repository": "https://github.com/Sm1rfa/SimpleMessage/tree/master/SimpleMessenger",
+  "repository": "https://github.com/Sm1rfa/SimpleMessage",
   "keywords": [
     "Electron",
     "simple",
