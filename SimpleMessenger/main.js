@@ -11,8 +11,7 @@ const { shell, ipcMain } = electron;
 const path = require('path')
 const url = require('url')
 
-const isDev = require('electron-is-dev');  // this is required to check if the app is running in development mode. 
-const {appUpdater} = require('./autoupdate');
+const {autoUpdater} = require("electron-updater");
 
 const mainURL = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
 
@@ -47,6 +46,7 @@ function createWindow () {
     mainWindow = null
   })
 
+  autoUpdater.checkForUpdates();
   //mainWindow.setMenu(null);
 }
 
@@ -151,19 +151,11 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-if (require('electron-squirrel-startup')) {
-	app.quit();
-}
+autoUpdater.on('update-downloaded', (info) => {
+  win.webContents.send('updateReady')
+});
 
-function isWindowsOrmacOS() {
-	return process.platform === 'darwin' || process.platform === 'win32';
-}
-
-const page = mainWindow.webContents;
-  
-  page.once('did-frame-finish-load', () => {
-    const checkOS = isWindowsOrmacOS();
-    if (checkOS && !isDev) {
-      // Initate auto-updates on macOs and windows
-      appUpdater();
-    }});
+// when receiving a quitAndInstall signal, quit and install the new version ;)
+ipcMain.on("quitAndInstall", (event, arg) => {
+  autoUpdater.quitAndInstall();
+})

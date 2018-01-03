@@ -1,14 +1,16 @@
 {
   "name": "simple-message",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "messaaging application",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "build":"build --win",
+    "ship":"build --win -p always"
   },
-  "repository": "https://sbonchev.eu",
+  "repository": "https://github.com/Sm1rfa/SimpleMessage/tree/master/SimpleMessenger",
   "keywords": [
     "Electron",
     "simple",
