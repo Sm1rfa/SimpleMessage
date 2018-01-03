@@ -1,6 +1,6 @@
 {
   "name": "simple-message",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "messaaging application",
   "main": "main.js",
   "repository": "https://github.com/Sm1rfa/SimpleMessage",
