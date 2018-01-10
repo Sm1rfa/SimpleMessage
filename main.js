@@ -1,11 +1,13 @@
 const config = require('./config');
 
+var { app, BrowserWindow, Tray, Menu } = require('electron')
+
 const electron = require('electron')
 // Module to control application life.
-const app = electron.app
+//const app = electron.app
 // Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow
-const Menu = electron.Menu;
+//const BrowserWindow = electron.BrowserWindow
+//const Menu = electron.Menu;
 const { shell, ipcMain } = electron;
 
 const path = require('path')
@@ -14,6 +16,8 @@ const url = require('url')
 const { autoUpdater } = require("electron-updater");
 
 const mainURL = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
+const iconName = "images/msgIco.ico";
+const trayIconPath = path.join(__dirname, 'images/msgLogo.png');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -24,7 +28,7 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 1000, 
     height: 800, 
-    icon:"images/msgIco.ico",
+    icon: iconName,
     webPreferences: {
       preload: path.join(__dirname, 'browser.js'),
       nodeIntegration: false,
@@ -37,6 +41,38 @@ function createWindow () {
 
   // Open the DevTools.
   //mainWindow.webContents.openDevTools()
+
+  var appIcon = new Tray(trayIconPath);
+  var trayContextMenu = Menu.buildFromTemplate([
+    {
+      label:"Show SimpleMessage", click: function() { mainWindow.show() }
+    },
+    {
+      label:"Quit", click: function() {
+        app.isQuiting = true;
+        app.quit();
+      }
+    }
+  ]);
+
+  appIcon.setContextMenu(trayContextMenu)
+
+  mainWindow.on('close', function (event) {
+    mainWindow = null
+    })
+
+    mainWindow.on('minimize', function (event) {
+        event.preventDefault()
+        mainWindow.hide()
+    })
+
+    mainWindow.on('show', function () {
+        appIcon.setHighlightMode('always')
+    })
+
+    appIcon.on('click', function(event) {
+      mainWindow.show();
+    })
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -93,7 +129,7 @@ app.on('ready', function() {
           }
         },
         {
-          label:"Exit",
+          label:"Quit",
           click: () => {
             app.quit();
           }
@@ -116,7 +152,7 @@ app.on('ready', function() {
               width:300, 
               height:500, 
               title: "About", 
-              icon:"images/msgIco.ico",
+              icon: iconName,
               alwaysOnTop:true,
               resizable:false, 
               minimizable: false });
