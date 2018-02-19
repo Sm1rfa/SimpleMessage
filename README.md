@@ -4,7 +4,7 @@ Small electron app, which enables the users to easily switch between popular cha
 # How to install and maintain
 SimpleMessage is sef updating application with open source code.
 This means that you download ones and you reciece updates silently.
-You just need to download the installer from https://github.com/Sm1rfa/SimpleMessage/releases/download/v1.9.3/simple-message-setup-1.9.3.exe
+You just need to download the installer from https://github.com/Sm1rfa/SimpleMessage/releases/download/v1.10.1/simple-message-setup-1.10.1.exe
 and install the application.
 
 # How to use
