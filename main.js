@@ -1,3 +1,5 @@
+// with release help of https://medium.freecodecamp.org/quick-painless-automatic-updates-in-electron-d993d5408b3a
+
 const config = require('./config');
 
 var { app, BrowserWindow, Tray, Menu } = require('electron')
@@ -18,6 +20,15 @@ const { autoUpdater } = require("electron-updater");
 const mainURL = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
 const iconName = "images/msgIco.ico";
 const trayIconPath = path.join(__dirname, 'images/msgLogo.png');
+
+// https://github.com/sindresorhus/electron-context-menu
+require('electron-context-menu')({
+	prepend: (params, browserWindow) => [{
+		label: 'ContextMenu',
+		// Only show it when right-clicking images
+		visible: params.mediaType === 'image'
+	}]
+});
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
